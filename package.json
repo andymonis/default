@@ -1,30 +1,31 @@
 {
-  "name": "Default",
-  "version": "1.0.3",
-  "description": "The Vee3 default app that should load if no app is specified. This is in effect the launch pad (store?) for all other apps.",
-  "main": "index.js",
-  "app": {
-    "manifest": {
-      "// service_worker": "network_or_cache",
-      "// ": "probably don't want this to be cached and only online i.e. not pinnable"
+    "name": "Default",
+    "version": "1.0.4",
+    "description": "The Vee3 default app that should load if no app is specified. This is in effect the launch pad (store?) for all other apps.",
+    "main": "index.js",
+    "app": {
+        "manifest": {
+            "// service_worker": "network_or_cache",
+            "// ": "probably don't want this to be cached and only online i.e. not pinnable"
+        },
+        "frameworks": [
+            "knockout",
+            "tailwindcss"
+        ]
     },
-    "frameworks": [
-      "knockout",
-      "tailwindcss"
-    ]
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "tag": "git add . && git commit -m \"Checking in latest\" && npm version patch && git add . && git commit -m \"Checking in version patch\" && git push"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andymonis/default.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/andymonis/hello_world/issues"
-  },
-  "homepage": "https://github.com/andymonis/hello_world#readme"
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "commit": "git add . && git commit -m 'Checking in latest' && git push",
+        "tag": "npm --no-git-tag-version version patch && npm run commit"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/andymonis/default.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/andymonis/hello_world/issues"
+    },
+    "homepage": "https://github.com/andymonis/hello_world#readme"
 }
