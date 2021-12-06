@@ -1,6 +1,6 @@
 {
     "name": "Default",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "The Vee3 default app that should load if no app is specified. This is in effect the launch pad (store?) for all other apps.",
     "main": "index.js",
     "app": {
