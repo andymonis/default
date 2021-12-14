@@ -51,11 +51,12 @@ export default class Main {
     }
 
     async init(config) {
-        let res = await this.$api.$post("/open/apps/list", {});
-        for (let i = 0; i < res.apps.length; i++) {
-            res.apps[i].app_icon = "url(/packages/" + res.apps[i].id + "/icons/mask-192.png)";
-        }
+        // let res = await this.$api.$post("/open/apps/list", {});
+        // Commented as I don't want to do this on the default anymore
+        // for (let i = 0; i < res.apps.length; i++) {
+        //     res.apps[i].app_icon = "url(/packages/" + res.apps[i].id + "/icons/mask-192.png)";
+        // }
 
-        this.model.apps(res.apps)
+        // this.model.apps(res.apps)
     }
 }
