@@ -14,6 +14,7 @@ class Utils {
 
 class Model {
     constructor(api) {
+        this.visible = ko.observable(true);
         // Email Address used in registration
         this.email = ko.observable("");
         /**
