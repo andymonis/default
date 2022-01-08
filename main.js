@@ -1,41 +1,34 @@
 // Knockout is included
 
+import V3Store from "/vee3/vee_store.js";
+
+class Utils {
+    static validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+}
+
 class Model {
     constructor(api) {
-        this.apps = ko.observableArray([]);
-        this.views = {
-            home: ko.observable(true),
-            build: ko.observable(false),
-            run: ko.observable(false)
-        }
-
+        // Email Address used in registration
+        this.email = ko.observable("");
         /**
-         * Start any App as found by the search
-         * @param {*} data 
-         * @param {*} evt 
+         * On Register handler, used to register
          */
-        this.on_play = (data, evt) => {
-            let redirect = window.location.origin + "/app/" + data.name;
-            // console.log(redirect)
-
-            window.location.href = redirect;
-        }
-
-        /**
-         * Shortcut for running the ME app, which is used to start developing
-         */
-        this.on_play_me = () => {
-            this.on_play({ name: "me" });
-        }
-
-        this.on_show = function(data, evt) {
-            let name = evt.srcElement.name;
-            for (let key in this.views) {
-                if (key === name) {
-                    this.views[key](true);
-                } else {
-                    this.views[key](false);
-                }
+        this.on_register = async(data, evt) => {
+            // Check the email is valid
+            let valid = Utils.validateEmail(this.email());
+            if (valid !== undefined) {
+                // Write to Vee3
+                let res = await V3Store.$post("/register/interest", {
+                    email: this.email()
+                });
+            } else {
+                console.log("email address is invalid");
             }
         }
     }
@@ -44,19 +37,14 @@ class Model {
 export default class Main {
     constructor(config) {
         this.$api = config.api;
+        // Set app instanceId into store
+        V3Store.instanceId(config.app.instancedid);
 
         this.model = new Model(this.api);
+        window.model = this.model;
 
         ko.applyBindings(this.model);
     }
 
-    async init(config) {
-        // let res = await this.$api.$post("/open/apps/list", {});
-        // Commented as I don't want to do this on the default anymore
-        // for (let i = 0; i < res.apps.length; i++) {
-        //     res.apps[i].app_icon = "url(/packages/" + res.apps[i].id + "/icons/mask-192.png)";
-        // }
-
-        // this.model.apps(res.apps)
-    }
+    async init(config) {}
 }
