@@ -3,7 +3,9 @@
 import V3Store from "/vee3/vee_store.js";
 
 class Utils {
-    static validateEmail = (email) => {
+    constructor() {}
+
+    static validateEmail(email) {
         return String(email)
             .toLowerCase()
             .match(
@@ -17,19 +19,30 @@ class Model {
         this.visible = ko.observable(true);
         // Email Address used in registration
         this.email = ko.observable("");
+        // Reason to contact
+        this.reason = ko.observable("");
+        // Feedback used to provide feedback on status
+        this.feedback = ko.observable("");
         /**
          * On Register handler, used to register
          */
         this.on_register = async(data, evt) => {
-            // Check the email is valid
-            let valid = Utils.validateEmail(this.email());
-            if (valid !== undefined) {
+            // Get the email prop
+            let email = this.email();
+            let reason = this.reason();
+            // Validate the email prop
+            let valid = Utils.validateEmail(email);
+            if (valid !== null) {
                 // Write to Vee3
-                let res = await V3Store.$post("/register/interest", {
-                    email: this.email()
-                });
+                // Special Case app is allowed to write to
+                let body = {
+                    email: encodeURIComponent(email),
+                    reason: encodeURIComponent(reason)
+                };
+                let res = await V3Store.$post("/register/interest", body);
+                this.feedback(`Registered ${res.status}. Thanks we'll be in touch.`);
             } else {
-                console.log("email address is invalid");
+                this.feedback(`email address is invalid`);
             }
         }
     }
