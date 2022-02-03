@@ -48,16 +48,56 @@ class Model {
     }
 }
 
+class Model2 {
+    constructor() {
+        // // Email Address used in registration
+        // this.username = document.getElementById("username");
+        // // Reason to contact
+        // this.reason = document.getElementById("reason");
+        // // Feedback used to provide feedback on status
+        // this.feedback = document.getElementById("feedback");
+
+        // register
+        document.getElementById("btn-register").addEventListener("click", async(event, data) => {
+            let _username = document.getElementById("frm-username").value;
+            let _reason = document.getElementById("frm-reason").value;
+            let feedback = "";
+
+            let valid = Utils.validateEmail(_username);
+            if (valid !== null) {
+                // Write to Vee3
+                // Special Case app is allowed to write.
+                let body = {
+                    email: encodeURIComponent(_username),
+                    reason: encodeURIComponent(_reason)
+                };
+                // Reset values
+                document.getElementById("frm-username").value = "";
+                document.getElementById("frm-reason").value = "";
+                let btn = document.getElementById("btn-register")
+                    // Post to vee3
+                let res = await V3Store.$post("/register/interest", body);
+                feedback = `Registered ${res.status}. Thanks we'll be in touch.`;
+            } else {
+                feedback = `email address is invalid`;
+            }
+            // display feedback
+            document.getElementById("el-feedback").innerText = feedback;
+        }, false);
+    }
+}
+
 export default class Main {
     constructor(config) {
         this.$api = config.api;
         // Set app instanceId into store
         V3Store.instanceId(config.app.instancedid);
 
-        this.model = new Model(this.api);
-        window.model = this.model;
+        this.model = new Model2();
+        // this.model = new Model(this.api);
+        // window.model = this.model;
 
-        ko.applyBindings(this.model);
+        // ko.applyBindings(this.model);
     }
 
     async init(config) {}

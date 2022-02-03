@@ -10,7 +10,7 @@
         },
         "frameworks": [
             "knockout",
-            "//tailwindcss"
+            "tailwindcss"
         ]
     },
     "scripts": {
