@@ -9,7 +9,7 @@
             "// ": "probably don't want this to be cached and only online i.e. not pinnable"
         },
         "frameworks": [
-            "knockout",
+            "//knockout",
             "//tailwindcss"
         ]
     },
@@ -18,7 +18,7 @@
         "commit": "git add . && git commit -m 'Checking in latest' && git push",
         "tag": "npm --no-git-tag-version version patch && npm run commit",
         "tailwind-build": "npx tailwindcss ../../v3/node_modules/tailwindcss/tailwind.css -o ./tailwind.css --purge './main.html'",
-        "sass-build": "sass main.scss main.css -s compressed",
+        "sass-build": "npx sass main.scss main.css -s compressed",
         "build-css": "npm run tailwind-build && npm run sass-build"
     },
     "repository": {

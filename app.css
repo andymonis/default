@@ -269,3 +269,5 @@ input {
 .vee3-text-highlight {
     color: rgb(6, 182, 212);
 }
+
+#loadOverlay{display: none;}
