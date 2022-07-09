@@ -14,48 +14,46 @@ class Utils {
     };
 }
 
-class Model {
-    constructor(api) {
-        this.visible = ko.observable(true);
-        // Email Address used in registration
-        this.email = ko.observable("");
-        // Reason to contact
-        this.reason = ko.observable("");
-        // Feedback used to provide feedback on status
-        this.feedback = ko.observable("");
-        /**
-         * On Register handler, used to register
-         */
-        this.on_register = async(data, evt) => {
-            // Get the email prop
-            let email = this.email();
-            let reason = this.reason();
-            // Validate the email prop
-            let valid = Utils.validateEmail(email);
-            if (valid !== null) {
-                // Write to Vee3
-                // Special Case app is allowed to write to
-                let body = {
-                    email: encodeURIComponent(email),
-                    reason: encodeURIComponent(reason)
-                };
-                let res = await V3Store.$post("/register/interest", body);
-                this.feedback(`Registered ${res.status}. Thanks we'll be in touch.`);
-            } else {
-                this.feedback(`email address is invalid`);
-            }
-        }
-    }
-}
+// class Model {
+//     constructor(api) {
+//         this.visible = ko.observable(true);
+//         // Email Address used in registration
+//         this.email = ko.observable("");
+//         // Reason to contact
+//         this.reason = ko.observable("");
+//         // Feedback used to provide feedback on status
+//         this.feedback = ko.observable("");
+//         /**
+//          * On Register handler, used to register
+//          */
+//         this.on_register = async(data, evt) => {
+//             // Get the email prop
+//             let email = this.email();
+//             let reason = this.reason();
+//             // Validate the email prop
+//             let valid = Utils.validateEmail(email);
+//             if (valid !== null) {
+//                 // Write to Vee3
+//                 // Special Case app is allowed to write to
+//                 let body = {
+//                     email: encodeURIComponent(email),
+//                     reason: encodeURIComponent(reason)
+//                 };
+//                 let res = await V3Store.$post("/register/interest", body);
+//                 this.feedback(`Registered ${res.status}. Thanks we'll be in touch.`);
+//             } else {
+//                 this.feedback(`email address is invalid`);
+//             }
+//         }
+//     }
+// }
 
 class Model2 {
     constructor() {
-        // // Email Address used in registration
-        // this.username = document.getElementById("username");
-        // // Reason to contact
-        // this.reason = document.getElementById("reason");
-        // // Feedback used to provide feedback on status
-        // this.feedback = document.getElementById("feedback");
+        // register
+        document.getElementById("btn-login").addEventListener("click", async(event, data) => {
+            window.location.replace("/app/login");
+        }, false);
 
         // register
         document.getElementById("btn-register").addEventListener("click", async(event, data) => {
